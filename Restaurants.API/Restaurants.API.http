@@ -4,16 +4,16 @@ GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants/1
+GET {{Restaurants.API_HostAddress}}/api/restaurants/4
 
 
 ###
 POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 {
-    
+ "Name": "Stanely restaurant" ,
 "Description": "A cozy restaurant serving a variety of dishes",
-"Category": "International Cuisine",
+"Category": "American",
 "HasDelivery": true,
 "ContactEmail": "info@test.com",
 "ContactNumber": "555-1234",
