@@ -1,17 +1,18 @@
-@Restaurants.API_HostAddress = https://localhost:44316
+#@Restaurants.API_HostAddress = https://localhost:44316   #IIS
+@Restaurants.API_HostAddress = https://localhost:7072     
 
 GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants/4
+GET {{Restaurants.API_HostAddress}}/api/restaurants/1
 
 
 ###
 POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 {
- "Name": "Stanely restaurant" ,
+"Name": "Stanely restaurant" ,
 "Description": "A cozy restaurant serving a variety of dishes",
 "Category": "American",
 "HasDelivery": true,
@@ -19,5 +20,21 @@ Content-Type: application/json
 "ContactNumber": "555-1234",
 "City": "New York",
 "Street": "123 Main Street",
-"PostalCode": "10010"
+"PostalCode": "10-010"
 }
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/5
+
+###
+
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/6
+Content-Type: application/json
+
+{
+"Name": "Patch restaurant" ,
+"Description": "A Patch restaurant serving ....",
+"HasDelivery": false
+}
+
+###
