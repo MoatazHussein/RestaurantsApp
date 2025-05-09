@@ -1,18 +1,20 @@
-#@Restaurants.API_HostAddress = https://localhost:44316   #IIS
+#@Restaurants.API_HostAddress = https://localhost:7072
 @Restaurants.API_HostAddress = https://localhost:7072     
+@token=CfDJ8F13jZd6ZghAoAs5aoUx5-N48QsgpFQy3CnVQfaaYG1dpPhu7ddDTdJwhqb6fE0RoEZzR95h6Gr0pwU7Pb7aW1Oflel9OuqOF3gRRozZ_iVfVJwaMGr1etKgcIE62EwR-csXWLPOy47by9gS2PrBYjvZLWxeNiK85SASaeCQZK-8-VySiUS0hWevO-_gMoCR49gZsEe-gIPYDr1geVu6rXQhsCGBv7go0xB-karq-pFOr3coueZe0FkWixzY7EmKQoj4ZIdAxsog5yGiQMyTwx-abUB8vtSJsdyqEDeP6leVWP3DFuwqEAykHud7yNjEecsIU7Gv_u9Mckj0le1eMnECBGz7yoiv2E57ndxUKUGmUtUHwA1QtZBl5PiBtsBwJqGsijuIM0XBIciH8_5CHYy-IdCjfJ0n3n1GUm3ce_ZcBJikyryH9k0bRH8WHF_4xUeT2Q-2d3saEk5e5_0PLHLUAYLjOQ9cA5TIr_wzTOCfLhkc_UeSoR89CM4JRJVM9UlCksEWdKs3_1LjLP_gBkR7Wu2tbH3yOR_pdgUCGEJewbuujs5VTK7G-Mf3O9pF9QZWN6XBRElWtkpmYNzzQjvCGqHj3oAqIShhDquHtunjhSYU4FNugUj2w-Fnuas-uyPXaEmd3LmuCC1IO0r0ZFB8C1n5Ln6rqxDT3TDuHUnH4-93SqzMVE-CaLphTjajK2JXnChZScSJpFmbzU07rgzN86snnQoIvbZIt1aI8tvkJdq0vk1l7wOsuwlaGqqDCAvV19p_rN0G5SZ0MueAA8ZfwtHrjSQlr1oU6hO8ffV4o-waao1X1NDeR9mjjeJnQK90Btkuop7wRf62lvTsXp7rrCCuhSZCny15J0vybbsOVa0c6uiynqogp3IrOr0Z1w
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants
-
+GET {{Restaurants.API_HostAddress}}/api/restaurants?SearchPhrase=str&PageSize=10&PageNumber=10&SortBy=Name&SortDirection=Descending
+Authorization : Bearer {{token}} 
 ###
 
-GET {{Restaurants.API_HostAddress}}/api/restaurants/1
+GET {{Restaurants.API_HostAddress}}/api/restaurants/3
 
 
 ###
 POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
+Authorization : Bearer {{token}} 
 {
-"Name": "Stanely restaurant" ,
+"Name": "test restaurant" ,
 "Description": "A cozy restaurant serving a variety of dishes",
 "Category": "American",
 "HasDelivery": true,
@@ -24,17 +26,82 @@ Content-Type: application/json
 }
 ###
 
-DELETE {{Restaurants.API_HostAddress}}/api/restaurants/5
-
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/78
+Content-Type: application/json
+Authorization : Bearer {{token}} 
 ###
 
-PATCH {{Restaurants.API_HostAddress}}/api/restaurants/6
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/8
 Content-Type: application/json
+Authorization : Bearer {{token}} 
 
 {
-"Name": "Patch restaurant" ,
+"Name": "Updated restaurant" ,
 "Description": "A Patch restaurant serving ....",
 "HasDelivery": false
 }
 
+###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes
+Content-Type: application/json
+
+{
+"Name": "Spaghetti Bolognese",
+"Description": "Classic Italian pasta dish with rich meat sauce", "Price": -23,
+"Price": 20,
+"Kilocalories": 30
+
+}
+
+###
+
+@restaurantId=3
+GET {{Restaurants.API_HostAddress}}/api/restaurants/{{restaurantId}}/dishes
+Authorization : Bearer {{token}} 
+Content-Type: application/json
+###
+
+@dishId=4
+GET {{Restaurants.API_HostAddress}}/api/restaurants/{{restaurantId}}/dishes/{{dishId}}
+
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/restaurants/{{restaurantId}}/dishes
+
+###
+POST {{Restaurants.API_HostAddress}}/api/identity/register
+Content-Type: application/json
+
+{
+"email": "admin@test.com",
+"password": "Pass123456#"
+}
+###
+
+POST {{Restaurants.API_HostAddress}}/api/identity/login
+Content-Type: application/json
+
+{
+"email": "owner@test.com",
+"password": "Pass123456#"
+}
+###
+POST {{Restaurants.API_HostAddress}}/api/identity/userRole
+Authorization : Bearer {{token}} 
+Content-Type: application/json
+{
+    "UserEmail":"testuser@test.com",
+    "RoleName":"User"
+}
+
+###
+
+DELETE {{Restaurants.API_HostAddress}}/api/identity/userRole
+Authorization : Bearer {{token}} 
+Content-Type: application/json
+{
+    "UserEmail":"user@test.com",
+    "RoleName":"User"
+}
 ###
