@@ -9,7 +9,7 @@ public class CreateRestaurantCommandValidator :AbstractValidator<CreateRestauran
     {
         RuleFor(dto => dto.Name).
             NotEmpty().WithMessage("Please provide a valid name")
-            .Length(2, 50);
+            .Length(3, 50);
 
         RuleFor(dto => dto.Category)
         //.Must(category => validCategories.Contains(category))
