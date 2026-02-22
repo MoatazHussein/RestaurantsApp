@@ -17,6 +17,16 @@ try
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowSpecificOrigin",
+            builder => builder
+            //.WithOrigins("http://localhost:3000", "https://iqdam1.vercel.app/")
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+    });
+
 
     var app = builder.Build();
 
@@ -36,18 +46,33 @@ try
         app.UseSwaggerUI();
     }
 
+    if (app.Environment.IsProduction())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("v1/swagger.json", "API V1.0");
+        });
+    }
+
 
     app.UseHttpsRedirection();
+    app.UseCors("AllowSpecificOrigin");
+
 
     app.MapGroup("api/identity")
         .WithTags("Identity")
         .MapIdentityApi<User>();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
 
+    app.MapGet("/", () => "Server is running....");
+
     app.Run();
+
 }
 catch (Exception ex)
 {
